@@ -1,0 +1,103 @@
+body {
+    background-color: rgb(178,34,34);
+}
+
+h1 {
+    font-family: 'Josefin Slab';
+    color: rgb(255, 255, 240);
+    font-size: 55px;
+    margin-left: 20px;
+}
+
+.btn {
+    text-transform: uppercase;
+    margin: 5px;
+    font-family: 'Montserrat';
+    color: rgb(230, 218, 194);
+}
+
+#buttons {
+    margin-left: 15px;
+    margin-right: auto;
+}
+
+#submit-button {
+    text-transform: uppercase;
+    margin: 5px;
+    font-family: 'Montserrat';
+    color: rgb(230, 218, 194);
+    background-color: rgb(243, 178, 58);
+    height: 35px;
+    width: 100px;
+    border-radius: 5px;
+    border: none;
+}
+
+#submit-button:hover {
+    color: black;
+}
+
+#user-input {
+    width: 380px;
+    display: inline-block;
+    height: 32px;
+    margin-top: 6px;
+}
+
+p {
+    margin-top: 25px;
+    margin-bottom: 3px;
+    color: rgb(255, 255, 240);
+    text-transform: uppercase;
+}
+
+#load-button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-transform: uppercase;
+    font-family: 'Montserrat';
+    background-color: rgb(56, 55, 53);
+    color: rgb(230, 218, 194);
+    margin-top: 30px;
+    height: 35px;
+    width: 200px;
+    border-radius: 5px;
+    border: none;
+}
+
+#load-button:hover {
+    opacity: .7;
+}
+
+form {
+    justify-content: center;
+    margin-top: 8px;
+}
+
+input {
+    display: inline-block;
+
+}
+
+.btn {
+    text-transform: uppercase;
+    margin: 5px;
+    font-family: 'Montserrat';
+    color: rgb(230, 218, 194);
+}
+
+.icon {
+    height: 240px;
+    
+}
+
+img {
+    height: 100%;
+    border-radius: 5px;
+}
+
+footer {
+    margin-top: 50px;
+    margin-bottom: 30px;
+}

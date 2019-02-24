@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Fashion GIF</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Cardo|EB+Garamond|Inconsolata|Josefin+Slab|Lato|Merriweather|Montserrat" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header>
+            <h1>Click to see style brands and icons. Use the form to add your own influences.</h1> 
+        </header>
+        <div id="buttons"></div>
+        <form id="icon-form" class="form-row align-items-center">
+            <div class="row">
+                <input type="text" id="user-input">
+                <button id="submit-button" type="submit" value="Submit">Submit</button>
+            </div>
+        </form>
+        <div class="container"> 
+            <div id="display-gifs" class="row"></div>
+        <footer id="divLoadButton"></footer>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="app.js"></script>
+    </body>
+</html>
