@@ -1,12 +1,21 @@
-var topics = ["coco chanel", "karl lagerfeld", "kate moss", "alexander mcqueen", "freja beha erichsen", "raf simons", "sofia coppola", "nick knight", "alexa chung", "anna wintour", "tom ford", "marc jacobs", "givenchy", "stella mccartney", "david bowie", "edie sedgwick"];
+var topics = ["coco chanel", "karl lagerfeld", "kate moss", "alexander mcqueen", "freja beha erichsen", "raf simons", "sofia coppola", "nick knight", "alexa chung", 
+"anna wintour", "tom ford", "marc jacobs", "givenchy", "stella mccartney", "david bowie", "edie sedgwick", "dior and i", "proenza schouler", "rag and bone", "kenzo", "john galliano"];
 var btn;
 var load;
 var x = 10;
+var i = 0;
+var topic = " ";
+var rating;
+var results;
 
 function displayIcon() {
+    topic = " ";
     $("#display-gifs").empty();
+    $("#divLoadButton").empty();
     x = 10;
-    var topic = $(this).attr("data-name");
+    i = 0;
+    console.log(i);
+    topic = $(this).attr("data-name");
     console.log(topic);
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + topic + "&api_key=CPnP7T93dynqIZ5D8SBRT7mHMeMS2cqR&limit="+x;
 
@@ -17,12 +26,13 @@ function displayIcon() {
     .then(function(response) {
         console.log(queryURL);
         console.log(response);
-        var results = response.data;
+        results = response.data;
         console.log(results);
        
-        for (var i=0; i<x; i++) {
+        for (i; i<results.length; i++) {
             var topicDiv = $("<div class='m-4 icon'>");
-            var rating = results[i].rating;
+            rating = results[i].rating;
+            console.log(rating);
             var p = $("<p>").text("Rating: " + rating);
             var iconImage = document.createElement("img");
             iconImage.setAttribute("src", results[i].images.original_still.url);
@@ -47,14 +57,18 @@ function displayIcon() {
         }  
         load = document.createElement("button");
         load.setAttribute('id', "load-button");
-        load.innerHTML = "LOAD MORE";
+        load.innerHTML = "load more";
         $("#divLoadButton").empty();
         $("#divLoadButton").append(load);
 
         $("#divLoadButton").on("click", function() {
+            console.log(topic);
             x=x+10;
+            console.log(x);
+            //i=i+10;
+            console.log(i);
             //Load
-            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + topic + "&api_key=CPnP7T93dynqIZ5D8SBRT7mHMeMS2cqR&limit="+x;
+            queryURL = "https://api.giphy.com/v1/gifs/search?q=" + topic + "&api_key=CPnP7T93dynqIZ5D8SBRT7mHMeMS2cqR&limit="+x;
             $.ajax({
             url: queryURL,
             method: "GET"
@@ -62,12 +76,13 @@ function displayIcon() {
             .then(function(response) {
                 console.log(queryURL);
                 console.log(response);
-                var results = response.data;
+                results = response.data;
                 console.log(results);
 
-                for (var i=10; i<i+10; i++) {
+                for (i; i<i+10; i++) {
             var topicDiv = $("<div class='m-4 icon'>");
-            var rating = results[i].rating;
+            rating = results[i].rating;
+            console.log(rating);
             var p = $("<p>").text("Rating: " + rating);
             var iconImage = document.createElement("img");
             iconImage.setAttribute("src", results[i].images.original_still.url);
@@ -91,7 +106,7 @@ function displayIcon() {
              });
 
         }  
-            //Load
+
 
         })
 
