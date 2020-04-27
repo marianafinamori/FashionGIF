@@ -8,7 +8,55 @@ var topic = " ";
 var rating;
 var results;
 
+//FUNCTION CALLED WHEN PAGE IS LOADED
+renderButtons();
+
+//FUNCTION THAT RENDER BUTTONS WITH PRE-DEFINED ICONS
+function renderButtons() {
+    $("#buttons").empty();
+    for (var i=0; i<topics.length; i++) {
+        btn = document.createElement("button");
+        btn.setAttribute("type", "submit");
+        btn.setAttribute("name", "icons");
+        btn.setAttribute("data-name", topics[i]);
+        btn.setAttribute('class', 'btn');
+        btn.setAttribute('id', [i]);
+        btn.innerHTML = topics[i];
+        //console.log(btn.value);
+        $('#buttons').append(btn);
+        if (i%9 === 0) {
+            document.getElementById([i]).style.backgroundColor = "rgb(221, 155, 133)"; //pink
+        } else if (i%5 === 0) {
+            document.getElementById([i]).style.backgroundColor = "rgb(220, 141, 66)"; //orange
+        } else if (i%6 === 0) {
+            document.getElementById([i]).style.backgroundColor = "rgb(80, 120, 85)"; //green
+        } else if (i%4 === 0) {
+            document.getElementById([i]).style.backgroundColor = "rgb(56, 55, 53)"; //black
+        } else if (i%7 === 0) {
+            document.getElementById([i]).style.backgroundColor = "rgb(144, 72, 48)"; //brown
+        } else if (i%2 === 0) {
+            document.getElementById([i]).style.backgroundColor = "rgb(243, 178, 58)"; //yellow
+        } else {
+            document.getElementById([i]).style.backgroundColor = "rgb(69, 142, 177)"; //blue
+        }
+    }
+}
+
+//SUBMIT USER'S IDEA OF ICON
+$("#submit-button").on("click", function(event) {
+    event.preventDefault();
+    var userIdea = document.getElementById("user-input").value;
+    console.log(userIdea);
+    topics.push(userIdea);
+    renderButtons();
+    });
+
+//CALL FUNCTION WHEN ICON BUTTON IS CLICKED
+$(document).on("click", ".btn", displayIcon);
+
+//FUCTION GETS ICON AND MAKES A REQUEST IT TO GIPHY API AND LOADS RESPONSE
 function displayIcon() {
+    document.querySelector(".msg").innerHTML = "Click the images to animate them"
     topic = " ";
     $("#display-gifs").empty();
     $("#divLoadButton").empty();
@@ -61,6 +109,7 @@ function displayIcon() {
         $("#divLoadButton").empty();
         $("#divLoadButton").append(load);
 
+        //FUNCTION CALLED WHEN "LOAD MORE" BUTTON IS CLICKED
         $("#divLoadButton").on("click", function() {
             console.log(topic);
             x=x+10;
@@ -80,80 +129,38 @@ function displayIcon() {
                 console.log(results);
 
                 for (i; i<i+10; i++) {
-            var topicDiv = $("<div class='m-4 icon'>");
-            rating = results[i].rating;
-            console.log(rating);
-            var p = $("<p>").text("Rating: " + rating);
-            var iconImage = document.createElement("img");
-            iconImage.setAttribute("src", results[i].images.original_still.url);
-            iconImage.setAttribute("data-still", results[i].images.original_still.url);
-            iconImage.setAttribute("data-animate", results[i].images.original.url);
-            iconImage.setAttribute("data-state", "still");
-            iconImage.setAttribute("class", "gif");
+                    var topicDiv = $("<div class='m-4 icon'>");
+                    rating = results[i].rating;
+                    console.log(rating);
+                    var p = $("<p>").text("Rating: " + rating);
+                    var iconImage = document.createElement("img");
+                    iconImage.setAttribute("src", results[i].images.original_still.url);
+                    iconImage.setAttribute("data-still", results[i].images.original_still.url);
+                    iconImage.setAttribute("data-animate", results[i].images.original.url);
+                    iconImage.setAttribute("data-state", "still");
+                    iconImage.setAttribute("class", "gif");
 
-            topicDiv.append(p, iconImage);
-            $("#display-gifs").append(topicDiv);
+                    topicDiv.append(p, iconImage);
+                    $("#display-gifs").append(topicDiv);
 
-            $(".gif").on("click", function() {
-                var state = $(this).attr("data-state");
-                if (state === "still") {
-                    $(this).attr("src", $(this).attr("data-animate"));
-                    $(this).attr("data-state", "animate");
-                } else {
-                    $(this).attr("src", $(this).attr("data-still"));
-                    $(this).attr("data-state", "still");
-                }
-             });
-
-        }  
-
-
-        })
-
-    });//ajax
-
-
+                    $(".gif").on("click", function() {
+                        var state = $(this).attr("data-state");
+                        if (state === "still") {
+                            $(this).attr("src", $(this).attr("data-animate"));
+                            $(this).attr("data-state", "animate");
+                        } else {
+                            $(this).attr("src", $(this).attr("data-still"));
+                            $(this).attr("data-state", "still");
+                        }
+                    });
+                }  
+            })
+        });
     })
 }
 
-function renderButtons() {
-    $("#buttons").empty();
-    for (var i=0; i<topics.length; i++) {
-        btn = document.createElement("button");
-        btn.setAttribute("type", "submit");
-        btn.setAttribute("name", "icons");
-        btn.setAttribute("data-name", topics[i]);
-        btn.setAttribute('class', 'btn');
-        btn.setAttribute('id', [i]);
-        btn.innerHTML = topics[i];
-        //console.log(btn.value);
-        $('#buttons').append(btn);
-        if (i%9 === 0) {
-            document.getElementById([i]).style.backgroundColor = "rgb(221, 155, 133)"; //pink
-        } else if (i%5 === 0) {
-            document.getElementById([i]).style.backgroundColor = "rgb(220, 141, 66)"; //orange
-        } else if (i%6 === 0) {
-            document.getElementById([i]).style.backgroundColor = "rgb(80, 120, 85)"; //green
-        } else if (i%4 === 0) {
-            document.getElementById([i]).style.backgroundColor = "rgb(56, 55, 53)"; //black
-        } else if (i%7 === 0) {
-            document.getElementById([i]).style.backgroundColor = "rgb(144, 72, 48)"; //brown
-        } else if (i%2 === 0) {
-            document.getElementById([i]).style.backgroundColor = "rgb(243, 178, 58)"; //yellow
-        } else {
-            document.getElementById([i]).style.backgroundColor = "rgb(69, 142, 177)"; //blue
-        }
-    }
-}
 
-$("#submit-button").on("click", function(event) {
-event.preventDefault();
-var userIdea = document.getElementById("user-input").value;
-console.log(userIdea);
-topics.push(userIdea);
-renderButtons();
-});
 
-$(document).on("click", ".btn", displayIcon);
 
-renderButtons();
+
+

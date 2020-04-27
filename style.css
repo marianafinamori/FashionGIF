@@ -6,8 +6,16 @@ h1 {
     font-family: 'Josefin Slab';
     color: rgb(255, 255, 240);
     font-size: 55px;
-    margin-left: 20px;
+    font-size: 3.5em;
+    text-align: center;
 }
+
+header {
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+
 
 .btn {
     text-transform: uppercase;
@@ -26,7 +34,8 @@ h1 {
     margin: 5px;
     font-family: 'Montserrat';
     color: rgb(230, 218, 194);
-    background-color: rgb(243, 178, 58);
+    /* background-color: rgb(243, 178, 58); */
+    background-color: rgb(56, 55, 53);
     height: 35px;
     width: 100px;
     border-radius: 5px;
@@ -35,6 +44,8 @@ h1 {
 
 #submit-button:hover {
     color: black;
+    /* color: rgb(243, 178, 58); */
+    /* color: rgb(80, 120, 85); */
 }
 
 #user-input {
@@ -47,7 +58,7 @@ h1 {
 p {
     margin-top: 25px;
     margin-bottom: 3px;
-    color: rgb(255, 255, 240);
+    color: rgb(230, 218, 194);
     text-transform: uppercase;
 }
 
@@ -88,16 +99,30 @@ input {
 }
 
 .icon {
-    height: 240px;
-    
+    height: 3%;
+    /* flex-direction: row; */
+
 }
 
 img {
-    height: 100%;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 
 footer {
     margin-top: 50px;
     margin-bottom: 30px;
+}
+
+.msg {
+    font-family: 'Montserrat', serif;
+    color: rgb(255, 255, 240);
+    font-size: 1.3em;
+    text-align: center;
+    margin-bottom: 0;
+    margin-top: 2%;
+}
+
+.row {
+    display: flex;
+    justify-content: space-around;
 }
