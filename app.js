@@ -2,7 +2,7 @@ var topics = ["coco chanel", "karl lagerfeld", "kate moss", "alexander mcqueen",
 "anna wintour", "tom ford", "marc jacobs", "givenchy", "stella mccartney", "david bowie", "edie sedgwick", "dior and i", "proenza schouler", "rag and bone", "kenzo", "john galliano"];
 var btn;
 var load;
-var x = 10;
+var x = 0;
 var i = 0;
 var topic = " ";
 var rating;
@@ -11,7 +11,7 @@ var results;
 //FUNCTION CALLED WHEN PAGE IS LOADED
 renderButtons();
 
-//FUNCTION THAT RENDER BUTTONS WITH PRE-DEFINED ICONS
+//CALLBACK THAT RENDERS BUTTONS WITH ICONS
 function renderButtons() {
     $("#buttons").empty();
     for (var i=0; i<topics.length; i++) {
@@ -42,29 +42,68 @@ function renderButtons() {
     }
 }
 
-//SUBMIT USER'S IDEA OF ICON
-$("#submit-button").on("click", function(event) {
+//CLICK TO SUBMIT USER'S IDEA OF ICON AND GENERATES ITS BUTTON
+$("#submit-button").on("click", addIcon)   
+
+//CLICK TO SHOW GIFS OF CLICKED ICON
+$(document).on("click", ".btn", displayIcon);
+
+//CLICK TO ANIMATE OR STOP GIFS
+$(document).on("click", ".gif", motion)
+
+//CLICK TO LOAD 10 MORE ICONS 
+$(document).on("click", "#divLoadButton", loadMore)
+
+
+//CALLBACK THAT SUBMITS USER'S ICON IDEA AND GENERATES ITS BUTTON
+function addIcon(event) {
     event.preventDefault();
     var userIdea = document.getElementById("user-input").value;
     console.log(userIdea);
     topics.push(userIdea);
     renderButtons();
-    });
+}
 
-//CALL FUNCTION WHEN ICON BUTTON IS CLICKED
-$(document).on("click", ".btn", displayIcon);
-
-//FUCTION GETS ICON AND MAKES A REQUEST IT TO GIPHY API AND LOADS RESPONSE
+//CALLBACK THAT GETS ICON AND MAKES A REQUEST TO GIPHY API
 function displayIcon() {
     document.querySelector(".msg").innerHTML = "Click the images to animate them"
     topic = " ";
     $("#display-gifs").empty();
     $("#divLoadButton").empty();
-    x = 10;
-    i = 0;
-    console.log(i);
+    x = x + 10;
     topic = $(this).attr("data-name");
-    console.log(topic);
+    // console.log(topic);
+    requestApi()
+}
+
+//CALLBACK THAT SWITCHES MOTION OF GIFS 
+function motion() {
+    var state = $(this).attr("data-state");
+    // console.log("initial state: " + state)
+    if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animated");
+        state = "animated"
+        // console.log("switch to: " + state)
+    } else if (state === "animated") {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+        state = "still"
+        // console.log("switch to: " + state)
+    }
+ };
+
+ //CALLBACK THAT LOADS 10 MORE GIFS
+ function loadMore() {
+     x = x + 10
+     console.log("i: " + i)
+     console.log("x: " + x)
+     console.log(topic);
+     requestApi()
+ }
+
+//CALLBACK THAT MAKES REQUEST TO GIPHY API AND LOADS RESPONSE
+function requestApi() {
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + topic + "&api_key=CPnP7T93dynqIZ5D8SBRT7mHMeMS2cqR&limit="+x;
 
     $.ajax({
@@ -72,94 +111,40 @@ function displayIcon() {
         method: "GET"
     })
     .then(function(response) {
+        console.log("This is the queryURL")
         console.log(queryURL);
+        console.log("This is the response")
         console.log(response);
         results = response.data;
+        console.log("This are the RESULTS")
         console.log(results);
        
         for (i; i<results.length; i++) {
             var topicDiv = $("<div class='m-4 icon'>");
             rating = results[i].rating;
-            console.log(rating);
+            // console.log(rating);
             var p = $("<p>").text("Rating: " + rating);
             var iconImage = document.createElement("img");
-            iconImage.setAttribute("src", results[i].images.original_still.url);
-            iconImage.setAttribute("data-still", results[i].images.original_still.url);
-            iconImage.setAttribute("data-animate", results[i].images.original.url);
+            var still = results[i].images.original_still.url;
+            var animated = results[i].images.original.url;
+            iconImage.setAttribute("src", still)
+            iconImage.setAttribute("data-still", still);
+            iconImage.setAttribute("data-animate", animated) ;
             iconImage.setAttribute("data-state", "still");
             iconImage.setAttribute("class", "gif");
 
             topicDiv.append(p, iconImage);
-            $("#display-gifs").append(topicDiv);
-
-            $(".gif").on("click", function() {
-                var state = $(this).attr("data-state");
-                if (state === "still") {
-                    $(this).attr("src", $(this).attr("data-animate"));
-                    $(this).attr("data-state", "animate");
-                } else {
-                    $(this).attr("src", $(this).attr("data-still"));
-                    $(this).attr("data-state", "still");
-                }
-             });
-        }  
+            $("#display-gifs").append(topicDiv);    
+        }
+        
+        //CREATE LOAD MORE BUTTON 
         load = document.createElement("button");
         load.setAttribute('id', "load-button");
         load.innerHTML = "load more";
         $("#divLoadButton").empty();
         $("#divLoadButton").append(load);
-
-        //FUNCTION CALLED WHEN "LOAD MORE" BUTTON IS CLICKED
-        $("#divLoadButton").on("click", function() {
-            console.log(topic);
-            x=x+10;
-            console.log(x);
-            //i=i+10;
-            console.log(i);
-            //Load
-            queryURL = "https://api.giphy.com/v1/gifs/search?q=" + topic + "&api_key=CPnP7T93dynqIZ5D8SBRT7mHMeMS2cqR&limit="+x;
-            $.ajax({
-            url: queryURL,
-            method: "GET"
-            })
-            .then(function(response) {
-                console.log(queryURL);
-                console.log(response);
-                results = response.data;
-                console.log(results);
-
-                for (i; i<i+10; i++) {
-                    var topicDiv = $("<div class='m-4 icon'>");
-                    rating = results[i].rating;
-                    console.log(rating);
-                    var p = $("<p>").text("Rating: " + rating);
-                    var iconImage = document.createElement("img");
-                    iconImage.setAttribute("src", results[i].images.original_still.url);
-                    iconImage.setAttribute("data-still", results[i].images.original_still.url);
-                    iconImage.setAttribute("data-animate", results[i].images.original.url);
-                    iconImage.setAttribute("data-state", "still");
-                    iconImage.setAttribute("class", "gif");
-
-                    topicDiv.append(p, iconImage);
-                    $("#display-gifs").append(topicDiv);
-
-                    $(".gif").on("click", function() {
-                        var state = $(this).attr("data-state");
-                        if (state === "still") {
-                            $(this).attr("src", $(this).attr("data-animate"));
-                            $(this).attr("data-state", "animate");
-                        } else {
-                            $(this).attr("src", $(this).attr("data-still"));
-                            $(this).attr("data-state", "still");
-                        }
-                    });
-                }  
-            })
-        });
     })
 }
-
-
 
 
 

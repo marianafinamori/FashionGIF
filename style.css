@@ -15,8 +15,6 @@ header {
     padding-bottom: 2%;
 }
 
-
-
 .btn {
     text-transform: uppercase;
     margin: 5px;
@@ -37,15 +35,13 @@ header {
     /* background-color: rgb(243, 178, 58); */
     background-color: rgb(56, 55, 53);
     height: 35px;
-    width: 100px;
+    width: 180px;
     border-radius: 5px;
     border: none;
 }
 
 #submit-button:hover {
     color: black;
-    /* color: rgb(243, 178, 58); */
-    /* color: rgb(80, 120, 85); */
 }
 
 #user-input {
@@ -115,8 +111,10 @@ footer {
 
 .msg {
     font-family: 'Montserrat', serif;
+    text-transform: uppercase;
     color: rgb(255, 255, 240);
-    font-size: 1.3em;
+    background-color: rgba(255, 255, 255, 0.2);
+    font-size: 1.2em;
     text-align: center;
     margin-bottom: 0;
     margin-top: 2%;
