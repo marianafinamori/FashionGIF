@@ -70,9 +70,13 @@ function displayIcon() {
     topic = " ";
     $("#display-gifs").empty();
     $("#divLoadButton").empty();
+    x = 0;
+    i = 0;
     x = x + 10;
     topic = $(this).attr("data-name");
     // console.log(topic);
+    console.log("Initial i: " + i)
+    console.log("Initial x: " + x)
     requestApi()
 }
 
@@ -96,8 +100,8 @@ function motion() {
  //CALLBACK THAT LOADS 10 MORE GIFS
  function loadMore() {
      x = x + 10
-     console.log("i: " + i)
-     console.log("x: " + x)
+     console.log("Load More i: " + i)
+     console.log("Load More x: " + x)
      console.log(topic);
      requestApi()
  }
